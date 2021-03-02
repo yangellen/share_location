@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_practice_wk8/screens/camera_screen.dart';
+import 'package:flutter_practice_wk8/screens/remote_data_screen.dart';
 import 'package:flutter_practice_wk8/screens/share_location_screen.dart';
 
 class MainTabController extends StatelessWidget {
   final screens = [
     ShareLocationScreen(
       title: 'Share Location Screen',
+    ),
+    RemoteDataScreen(
+      title: 'Remote Data Screen',
     ),
     CameraScreen(
       title: 'Share Location Screen',
@@ -14,7 +18,7 @@ class MainTabController extends StatelessWidget {
 
   final tabs = [
     Tab(icon: Icon(Icons.add_location)),
-    //Tab(icon: Icon(Icons.cloud_upload)),
+    Tab(icon: Icon(Icons.cloud_upload)),
     Tab(icon: Icon(Icons.camera_alt))
   ];
 
