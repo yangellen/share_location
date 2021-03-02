@@ -15,34 +15,27 @@ class RemoteDataScreen extends StatefulWidget {
 }
 
 class _RemoteDataScreenState extends State<RemoteDataScreen> {
-  Character character;
-
-  @override
-  void initState() {
-    super.initState();
-    retrieveCharacterData();
-  }
-
-  //getting info from aip
-  void retrieveCharacterData() async {
-    final http.Response apiResponse =
-        await http.get(RemoteDataScreen.URL); //will result in string
-
-    character = Character.fromJSON(jsonDecode(apiResponse.body));
-    setState(() {});
-  }
+  Future<http.Response> apiResponse =
+      http.get(RemoteDataScreen.URL); //will result in string
 
   @override
   Widget build(BuildContext context) {
-    if (character == null) {
-      return Center(child: CircularProgressIndicator());
-    } else {
-      return Center(
-        child: Text(
-          '${character.name}',
-          style: Theme.of(context).textTheme.headline5,
-        ),
-      );
-    }
+    return FutureBuilder(
+        future: apiResponse,
+        builder: (context, snapshot) {
+          Widget child;
+          if (snapshot.hasData) {
+            Character character =
+                Character.fromJSON(jsonDecode(snapshot.data.body));
+            child = Text(
+              '${character.name}',
+              style: Theme.of(context).textTheme.headline5,
+            );
+          } else {
+            child = CircularProgressIndicator();
+          }
+
+          return Center(child: child);
+        });
   }
 }
